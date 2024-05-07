@@ -36,10 +36,13 @@ function Book() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative mb-60">
       {/* --BOOK FILE VIEWER-- */}
-      <div className="w-10/12 h-full mx-auto flex items-center justify-center overflow-hidden rounded-2xl bg-green-300">
-        <Document file={contoh_buku1} onLoadSuccess={onDocumentLoadSuccess} className="flex items-center justify-center">
+      <div className="w-10/12 h-full mx-auto flex items-center justify-center ">
+        <Document
+          file={contoh_buku2}
+          onLoadSuccess={onDocumentLoadSuccess}
+          className="flex items-center justify-center rounded-2xl shadow-md">
           <Page pageNumber={pageNumber} width={width * 0.8} className="rounded-2xl overflow-hidden" />
         </Document>
       </div>
