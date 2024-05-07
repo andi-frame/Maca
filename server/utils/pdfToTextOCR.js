@@ -41,4 +41,3 @@ export const convertPdfToText = async (pdfFile) => {
   fs.unlinkSync(imageFile);
   return ret.data.text;
 };
-

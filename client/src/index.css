@@ -2,13 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* For Comic View UI */
-/* @layer components {
-  #pdf-controls {
-    display: none;
-  }
-  #pdf-renderer {
-    @apply flex flex-col justify-center items-center w-full;
-  }
-} */
-
+/* For Audio Player */
+@layer components {
+}

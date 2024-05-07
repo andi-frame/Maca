@@ -9,7 +9,6 @@ import "react-pdf/dist/Page/TextLayer.css";
 import contoh_buku1 from "../assets/books/buku-ilustrasi-anak_lumba-lumba.pdf";
 import contoh_buku2 from "../assets/books/74._Isi_dan_Sampul_Kalah_oleh_Si_Cerdik.pdf";
 
-
 // Setup react-pdf
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
 
@@ -46,19 +45,21 @@ function Book() {
       </div>
 
       {/* --PAGE COUNTER-- */}
-      <PageBookCounter numPages={numPages} pageNumber={pageNumber} />
+      <div className="flex justify-center items-center">
+        <IoIosArrowBack
+          id="pdf-pagination-prev"
+          className="h-10 w-10 text-green-800 absolute -translate-x-10 translate-y-2"
+          onClick={previousPage}
+        />
 
-      {/* --PAGE NAVIGATION-- */}
-      <IoIosArrowBack
-        id="pdf-pagination-prev"
-        className="h-10 w-10 text-green-800 absolute top-1/2 -translate-y-[50px] left-1"
-        onClick={previousPage}
-      />
-      <IoIosArrowForward
-        id="pdf-pagination-next"
-        className="h-10 w-10 text-green-800 absolute top-1/2 -translate-y-[50px] right-1"
-        onClick={nextPage}
-      />
+        <PageBookCounter numPages={numPages} pageNumber={pageNumber} className="self-center" />
+
+        <IoIosArrowForward
+          id="pdf-pagination-next"
+          className="h-10 w-10 text-green-800 absolute translate-x-10 translate-y-2"
+          onClick={nextPage}
+        />
+      </div>
     </div>
   );
 }

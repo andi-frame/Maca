@@ -9,7 +9,7 @@ export const convertTextToAudio = async (text) => {
     voiceId: voiceID,
   });
 
-  const fileName = `tempAudio.mp3`;
+  const fileName = `tempAudio.wav`;
   const fileWriteStream = fs.createWriteStream(fileName);
 
   console.log("Converting response to audio...");
