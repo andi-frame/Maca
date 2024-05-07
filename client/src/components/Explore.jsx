@@ -4,7 +4,7 @@ import Card from "./Card";
 function Explore() {
   return (
     <div className="my-5 ml-5">
-      <div className="w-11/12 h-[0.1px] mx-autom mb-5 bg-black opacity-50"></div>
+      <div className="w-11/12 h-[0.1px] ml-1 mb-5 bg-black opacity-50"></div>
       <h2 className="text-3xl">Explore</h2>
       <div className="flex">
         <Category name="All"></Category>
