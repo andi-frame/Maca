@@ -4,7 +4,7 @@ function SubmitPage() {
   return (
     <div className="flex flex-col">
       <div className="w-full h-20 bg-gradient-to-b from-[#5EB07B]/85 to[#737373] -z-10 absolute top-0"></div>
-      <HeaderBook title="Create Your Book" />
+      <HeaderBook title="Create Your Book" backHref="/"/>
       <div className="w-11/12 h-[0.1px] mx-auto mb-1 bg-black opacity-50 m-auto"></div>
 
       <form className="ml-8 mt-5">
@@ -18,7 +18,7 @@ function SubmitPage() {
               name="title"
               id="title"
               autoComplete="title"
-              className="block flex-1 rounded-sm bg-[#ECECEC]  py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0"
+              className="block flex-1 rounded-sm bg-[#ECECEC]  py-2 px-3 text-gray-900 placeholder:text-gray-400 ring-inset focus:ring-2 focus:ring-[#005860]/80 focus:outline-none"
               placeholder="Book Title"
             />
           </div>
@@ -34,7 +34,7 @@ function SubmitPage() {
               name="author"
               id="author"
               autoComplete="author"
-              className="block flex-1 rounded-sm bg-[#ECECEC]  py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0"
+              className="block flex-1 rounded-sm bg-[#ECECEC]  py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-[#005860]/80 focus:outline-none"
               placeholder="Book Author"
             />
           </div>
@@ -49,7 +49,7 @@ function SubmitPage() {
               id="genre"
               name="genre"
               autoComplete="genre"
-              className="block w-10/12 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 px-2">
+              className="block w-10/12 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 px-2 focus:ring-2 focus:ring-[#005860]/80 focus:outline-none">
               <option>Action</option>
               <option>Science</option>
               <option>Fable</option>
@@ -67,7 +67,7 @@ function SubmitPage() {
               name="description"
               id="description"
               rows={4}
-              className="block flex-1 rounded-sm bg-[#ECECEC]  py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0"
+              className="block flex-1 rounded-sm bg-[#ECECEC]  py-2 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-[#005860]/80 focus:outline-none"
               placeholder="Book Description"></textarea>
           </div>
         </div>
@@ -76,9 +76,7 @@ function SubmitPage() {
           <label htmlFor="bookfile">Upload Book</label>
           <div className="mt-2 rounded-lg border border-dashed border-gray-900/25 px-6 py-10 w-10/12">
             <div className="flex text-sm leading-6 text-gray-600">
-              <label
-                htmlFor="file-upload"
-                className="relative cursor-pointer rounded-md bg-white font-semibold text-[#379A85]">
+              <label htmlFor="file-upload" className="relative cursor-pointer rounded-md bg-white font-semibold text-[#379A85]">
                 <span>Upload a file</span>
                 <input id="file-upload" name="file-upload" type="file" className="sr-only" />
               </label>

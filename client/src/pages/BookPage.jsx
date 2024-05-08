@@ -7,7 +7,7 @@ function BookPage() {
   return (
     <div className="flex flex-col">
       <div className="w-full h-40 bg-gradient-to-b from-[#5EB07B]/85 to[#737373] -z-10 absolute"></div>
-      <HeaderBook title="Book Title" />
+      <HeaderBook title="Book Title" backHref="/" />
       <Book />
       <AudioBook />
     </div>

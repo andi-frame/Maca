@@ -23,7 +23,7 @@ function Home() {
         onClick={() => (location.href = "/submitpage")}>
         <FaPlus className="text-white text-3xl" />
       </div>
-      <Menu></Menu>
+      <Menu page="home"></Menu>
     </>
   );
 }
