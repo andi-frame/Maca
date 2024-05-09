@@ -15,7 +15,7 @@ mongoose.connect(MONGODB_URI);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/api/book", bookRoutes);
+app.use("/book", bookRoutes);
 app.use("/api", pdfToAudioRoute);
 app.use("/api", askOpenaiRoute);
 app.use("", loginRoute);
