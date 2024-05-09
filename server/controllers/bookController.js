@@ -3,19 +3,19 @@ import { storage } from "../firebase.js";
 import BookModel from "../models/BookModel.js";
 import upPdfTextToMongoDb from "../utils/upPdfTextToMongoDb.js";
 
-const index = async (req, res) => {
-  BookModel.find()
-    .then((response) => {
-      res.json({
-        response,
-      });
-    })
-    .catch((error) => {
-      res.json({
-        message: error,
-      });
-    });
-};
+// const index = async (req, res) => {
+//   BookModel.find()
+//     .then((response) => {
+//       res.json({
+//         response,
+//       });
+//     })
+//     .catch((error) => {
+//       res.json({
+//         message: error,
+//       });
+//     });
+// };
 
 const show = (req, res) => {
   let bookID = req.body.bookID;
@@ -23,27 +23,6 @@ const show = (req, res) => {
     .then((response) => {
       res.json({
         response,
-      });
-    })
-    .catch((error) => {
-      res.json({
-        message: error,
-      });
-    });
-};
-
-const store = (req, res) => {
-  let book = new BookModel({
-    title: req.body.title,
-    author: req.body.author,
-    genre: req.body.genre,
-    file: req.file.path,
-  });
-  book
-    .save()
-    .then(() => {
-      res.json({
-        message: "Book added successfully!",
       });
     })
     .catch((error) => {
@@ -128,4 +107,20 @@ const submit = async (req, res) => {
   }
 };
 
-export default { index, show, store, update, destroy, submit };
+// -- Find books by filter --
+const findBy = async (req, res) => {
+  const filter = req.body.filter;
+  BookModel.find(filter)
+    .then((response) => {
+      res.json({
+        response,
+      });
+    })
+    .catch((error) => {
+      res.json({
+        message: error,
+      });
+    });
+};
+
+export default { findBy, show, update, destroy, submit };
