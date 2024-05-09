@@ -1,8 +1,11 @@
 import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
-function HeaderBook({ title, backHref }) {
+function HeaderBook({ title, backHref, location }) {
+  const history = useNavigate();
+
   function handleClick() {
-    location.href = backHref;
+    history("/", { state: { data: location.state.data } });
   }
 
   return (

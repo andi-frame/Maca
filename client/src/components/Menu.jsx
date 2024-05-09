@@ -5,7 +5,11 @@ import activities_green from "../assets/activities_logo_green.svg";
 import profile_white from "../assets/profile_logo_white.svg";
 import profile_green from "../assets/profile_logo_green.svg";
 
-function Menu({ page }) {
+import { useNavigate } from "react-router-dom";
+
+function Menu({ page, location }) {
+  const history = useNavigate();
+
   var activities;
   var home;
   var profile;
@@ -30,21 +34,21 @@ function Menu({ page }) {
         <div
           className="flex flex-col items-center justify-center"
           onClick={() => {
-            location.href = "/activities";
+            history("/activities", { state: { data: location.state.data } });
           }}>
           <img className="w-11" src={activities} alt="activities_white" />
         </div>
         <div
           className="flex flex-col items-center justify-center"
           onClick={() => {
-            location.href = "/";
+            history("/", { state: { data: location.state.data } });
           }}>
           <img className="w-11" src={home} alt="home_green" />
         </div>
         <div
           className="flex flex-col items-center justify-center"
           onClick={() => {
-            location.href = "/profile";
+            history("/profile", { state: { data: location.state.data } });
           }}>
           <img className="w-[60px]" src={profile} alt="profile_white" />
         </div>

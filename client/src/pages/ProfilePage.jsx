@@ -1,15 +1,17 @@
 import Menu from "../components/Menu";
 import { GoPerson } from "react-icons/go";
+import { useLocation } from "react-router-dom";
 
 function ProfilePage() {
-  const email = "barru.adi@gmail.com";
+  const location = useLocation();
+  const email = location.state.data.email;
   const phonenumber = "081234567890";
   const age = "18 tahun";
   return (
     <div>
       <div className="flex flex-col justify-center items-center h-screen w-full">
         <GoPerson className="w-20 h-20" />
-        <span className="text-2xl text-[#379A85]">Barru Adi</span>
+        <span className="text-2xl text-[#379A85]">{location.state.data.username}</span>
         <form action="" className="w-8/12 mt-10">
           <div>
             <span className="text-[14px]">Email</span>
@@ -65,7 +67,7 @@ function ProfilePage() {
           </div>
         </form>
       </div>
-      <Menu page="profile" />
+      <Menu page="profile" location={location} />
     </div>
   );
 }

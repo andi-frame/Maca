@@ -1,10 +1,13 @@
 import HeaderBook from "../components/HeaderBook";
+import { useLocation } from "react-router-dom";
 
 function SubmitPage() {
+  const location = useLocation();
+
   return (
     <div className="flex flex-col">
       <div className="w-full h-20 bg-gradient-to-b from-[#5EB07B]/85 to[#737373] -z-10 absolute top-0"></div>
-      <HeaderBook title="Create Your Book" backHref="/"/>
+      <HeaderBook title="Create Your Book" location={location} />
       <div className="w-11/12 h-[0.1px] mx-auto mb-1 bg-black opacity-50 m-auto"></div>
 
       <form className="ml-8 mt-5">

@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import bookRoutes from "./routes/bookRoutes.js";
 import pdfToAudioRoute from "./routes/pdfToAudioRoute.js";
 import askOpenaiRoute from "./routes/askOpenaiRoute.js";
+import loginRoute from "./routes/loginRoutes.js";
 
 const app = Express();
 const PORT = process.env.PORT;
@@ -17,7 +18,8 @@ app.use(bodyParser.json());
 app.use("/api/book", bookRoutes);
 app.use("/api", pdfToAudioRoute);
 app.use("/api", askOpenaiRoute);
+app.use("", loginRoute);
 
 app.listen(PORT, () => {
   console.log(`Running on port ${PORT}`);
-}); 
+});

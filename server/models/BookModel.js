@@ -14,7 +14,11 @@ const bookSchema = new Schema(
     },
     genre: {
       type: String,
-      required: true,
+      required: false,
+    },
+    description: {
+      type: String,
+      required: false,
     },
     file: {
       type: String,
@@ -24,5 +28,5 @@ const bookSchema = new Schema(
   { timestamps: true }
 );
 
-const BookModel = mongoose.model("BookModel", bookSchema);
+const BookModel = new mongoose.model("BookModel", bookSchema);
 export default BookModel;
