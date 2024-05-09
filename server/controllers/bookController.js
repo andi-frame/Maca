@@ -1,4 +1,7 @@
+import { ref, uploadBytes } from "firebase/storage";
+import { storage } from "../firebase.js";
 import BookModel from "../models/BookModel.js";
+import upPdfTextToMongoDb from "../utils/upPdfTextToMongoDb.js";
 
 const index = async (req, res) => {
   BookModel.find()
@@ -86,4 +89,43 @@ const destroy = (req, res) => {
     });
 };
 
-export default { index, show, store, update, destroy };
+// -----------------------------------------
+// -- Submit book to firebase and mongodb --
+const submit = async (req, res) => {
+  const file = req.file;
+  if (file && req.body.title && req.body.author && req.body.uploaderEmail) {
+    // Check if the book title already exists in the database
+    const existingBook = await BookModel.findOne({ title: req.body.title });
+
+    if (existingBook) {
+      res.json({ uploaded: false, message: "Book title already exists. Please choose a different title!" });
+    } else {
+      // Upload file to firebase
+      console.log("Uploading Book");
+      const filePath = "books/" + new Date() + " -- " + file.originalname;
+      const fileRef = ref(storage, filePath);
+      await uploadBytes(fileRef, file.buffer);
+      const pdfToText = await upPdfTextToMongoDb(file.buffer);
+
+      // Upload file information to mongodb
+      const data = {
+        title: req.body.title,
+        author: req.body.author,
+        uploaderEmail: req.body.uploaderEmail,
+        genre: req.body.genre,
+        description: req.body.description,
+        text: pdfToText.text,
+        summary: pdfToText.summary,
+        file: filePath,
+      };
+
+      await BookModel.insertMany(data);
+      console.log("Book added successfully!");
+      res.json({ uploaded: true });
+    }
+  } else {
+    res.json({ uploaded: false, message: "Judul, pencipta, dan file buku tidak boleh kosong!" });
+  }
+};
+
+export default { index, show, store, update, destroy, submit };

@@ -28,12 +28,10 @@ router.post("/register", async (req, res) => {
 
     data.password = hashedPassword; // Replace the original password with the hashed one
 
-    const userdata = await LoginModel.insertMany(data);
-    console.log(userdata);
+    await LoginModel.insertMany(data);
     res.json({ exist: false, username: data.name, email: data.email });
   }
 });
-
 
 router.post("/login", async (req, res) => {
   try {
@@ -47,7 +45,6 @@ router.post("/login", async (req, res) => {
     if (!isPasswordMatch) {
       res.json({ exist: false, message: "Password incorrect" });
     } else {
-      console.log(check);
       res.json({ exist: true, username: check.name, email: check.email });
     }
   } catch {

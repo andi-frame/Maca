@@ -1,5 +1,5 @@
 import HeaderBook from "../components/HeaderBook";
-import { useEffect, useState, createRef } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -18,6 +18,7 @@ function SubmitPage() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("author", author);
+    formData.append("uploaderEmail", location.state.data.email);
     formData.append("genre", genre);
     formData.append("description", description);
     formData.append("file", file, file.name);

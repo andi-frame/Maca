@@ -13,6 +13,14 @@ const loginSchema = new Schema(
       unique: true,
       required: true,
     },
+    phonenumber: {
+      type: String,
+      required: false,
+    },
+    age: {
+      type: String,
+      required: false,
+    },
     password: {
       type: String,
       required: true,

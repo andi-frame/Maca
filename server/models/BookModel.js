@@ -12,11 +12,28 @@ const bookSchema = new Schema(
       type: String,
       required: true,
     },
+    uploaderEmail: {
+      type: String,
+      required: true,
+    },
     genre: {
       type: String,
       required: false,
     },
     description: {
+      type: String,
+      required: false,
+    },
+    likes: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    text: {
+      type: Array,
+      required: false,
+    },
+    summary: {
       type: String,
       required: false,
     },
