@@ -40,7 +40,7 @@ function Book() {
       {/* --BOOK FILE VIEWER-- */}
       <div className="w-10/12 h-full mx-auto flex items-center justify-center ">
         <Document
-          file={contoh_buku2}
+          file={"https://firebasestorage.googleapis.com/v0/b/maca-deb33.appspot.com/o/books%2FFri%20May%2010%202024%2009%3A59%3A54%20GMT%2B0700%20(Western%20Indonesia%20Time)%20--%20buku-ilustrasi-anak_lumba-lumba.pdf?alt=media&token=58156b56-d883-4d49-aa23-3e2623807aae"}
           onLoadSuccess={onDocumentLoadSuccess}
           className="flex items-center justify-center rounded-2xl shadow-md">
           <Page pageNumber={pageNumber} width={width * 0.8} className="rounded-2xl overflow-hidden" />

@@ -2,13 +2,14 @@ import * as pdfjs from "pdfjs-dist/legacy/build/pdf.mjs";
 import { createCanvas } from "canvas";
 import { createWorker } from "tesseract.js";
 import fs from "fs";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../firebase.js";
 
 // Function to convert pdf file to image file (for specific page)
 export const convertPdfToImage = async (pdfFile) => {
   pdfjs.GlobalWorkerOptions.workerSrc = "pdfjs-dist/legacy/build/pdf.worker.min.mjs";
   try {
     // Initialize PDF.js with the BinaryData
-    // const binaryData = new Uint8Array(fs.readFileSync(pdfFile));
     const binaryData = new Uint8Array(pdfFile);
     const pdfDoc = await pdfjs.getDocument({ data: binaryData }).promise;
 
@@ -29,21 +30,28 @@ export const convertPdfToImage = async (pdfFile) => {
       let buffer = new Buffer.from(imageBase64Data, "base64");
 
       // Store image file
-      // const imageFile = `tmp/tempImgForOCR.png`;
       const imageFile = `tmp/ocr-${numPage}.png`;
       fs.writeFileSync(imageFile, buffer);
       imagesPath.push(imageFile);
+
       numPage++;
     }
 
-    return imagesPath; //imageFile
+    return imagesPath;
   } catch (error) {
     throw new Error(`Error converting PDF to image: ${error}`);
   }
 };
 
-export const convertPdfToText = async (pdfFile) => {
+export const convertPdfToText = async (pdfFile, bookTitle) => {
   const imagesPath = await convertPdfToImage(pdfFile);
+
+  // Upload book cover to firebase
+  const binaryData = new Uint8Array(fs.readFileSync(imagesPath[0]));
+  const filePath = "bookCover/" + new Date() + " -- " + bookTitle + ".png";
+  const fileRef = ref(storage, filePath);
+  await uploadBytes(fileRef, binaryData);
+  const coverUrl = await getDownloadURL(fileRef);
 
   var textOCR = [];
   const worker = await createWorker("ind");
@@ -54,5 +62,5 @@ export const convertPdfToText = async (pdfFile) => {
   }
   await worker.terminate();
 
-  return textOCR;
+  return { textOCR: textOCR, coverUrl: coverUrl };
 };

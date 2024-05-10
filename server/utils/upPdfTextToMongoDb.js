@@ -1,8 +1,8 @@
 import { convertPdfToText } from "./pdfToTextOCR.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-export default async function upPdfTextToMongoDb(bufferData) {
-  const textOCR = await convertPdfToText(bufferData);
+export default async function upPdfTextToMongoDb(bufferData, bookTitle) {
+  const { textOCR, coverUrl } = await convertPdfToText(bufferData, bookTitle);
 
   // Ringkasan cerita dengan Gemini AI
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -17,5 +17,6 @@ export default async function upPdfTextToMongoDb(bufferData) {
   return {
     text: textOCR,
     summary: geminiText,
+    img: coverUrl,
   };
 }

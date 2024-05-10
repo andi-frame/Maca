@@ -1,13 +1,21 @@
 import { TbPointFilled } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 
 function Card(Props) {
+  const history = useNavigate();
+  const location = Props.location;
+
+  function clickHandler() {
+    history(`/book/${Props.id}`, { state: { data: location.state.data } });
+  }
+
   return (
-    <div className="h-48 w-40 rounded-3xl bg-[#F3F3F3] overflow-hidden my-5 flex-none">
+    <div className="h-48 w-40 rounded-3xl bg-[#F3F3F3] overflow-hidden my-5 flex-none" onClick={clickHandler}>
       <div>
         <img className="h-28 w-full" src={Props.img} alt={"Gambar " + Props.title} />
       </div>
       <div className="px-3 pt-2 flex flex-col gap-3">
-        <h4 className="text-xl">{Props.title}</h4>
+        <h4 className="text-md">{Props.title}</h4>
         <div className="flex justify-between">
           <div className="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 mr-1">

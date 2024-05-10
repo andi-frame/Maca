@@ -15,5 +15,6 @@ router.post("/show", BookController.show);
 router.post("/update", BookController.update);
 router.post("/delete", BookController.destroy);
 router.post("/submit", uploadMulter.single("file"), BookController.submit);
+router.post("/download", BookController.download);
 
 export default router;

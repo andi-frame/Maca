@@ -1,7 +1,7 @@
 import Category from "./Category";
-import Card from "./Card";
+import CardsContainer from "./CardsContainer";
 
-function Explore() {
+function Explore({ location }) {
   return (
     <div className="my-5 ml-5">
       <div className="w-11/12 h-[0.1px] ml-1 mb-5 bg-black opacity-50"></div>
@@ -12,12 +12,8 @@ function Explore() {
         <Category name="Science"></Category>
       </div>
       {/* Make new components for cards below */}
-      <h3>Fable</h3>
-      <div className="flex gap-6 overflow-auto">
-        <Card title="Book Title" likes="100" genre="Fairy" img="src\assets\card_img.png" />
-        <Card title="Book Title" likes="100" genre="Fairy" img="src\assets\card_img.png" />
-        <Card title="Book Title" likes="100" genre="Fairy" img="src\assets\card_img.png" />
-      </div>
+      <h3 className="text-xl">Fable</h3>
+      <CardsContainer genre="Fable" location={location} />
     </div>
   );
 }

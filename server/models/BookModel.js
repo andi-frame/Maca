@@ -37,6 +37,10 @@ const bookSchema = new Schema(
       type: String,
       required: false,
     },
+    img: {
+      type: String,
+      required: false,
+    },
     file: {
       type: String,
       required: true,

@@ -84,7 +84,7 @@ const submit = async (req, res) => {
       const filePath = "books/" + new Date() + " -- " + file.originalname;
       const fileRef = ref(storage, filePath);
       await uploadBytes(fileRef, file.buffer);
-      const pdfToText = await upPdfTextToMongoDb(file.buffer);
+      const pdfTextToMongoDb = await upPdfTextToMongoDb(file.buffer, req.body.title);
 
       // Upload file information to mongodb
       const data = {
@@ -93,8 +93,9 @@ const submit = async (req, res) => {
         uploaderEmail: req.body.uploaderEmail,
         genre: req.body.genre,
         description: req.body.description,
-        text: pdfToText.text,
-        summary: pdfToText.summary,
+        text: pdfTextToMongoDb.text,
+        summary: pdfTextToMongoDb.summary,
+        img: pdfTextToMongoDb.img,
         file: filePath,
       };
 
@@ -123,4 +124,11 @@ const findBy = async (req, res) => {
     });
 };
 
-export default { findBy, show, update, destroy, submit };
+// -- Dowload book by id
+const dowload = async (req, res) => {
+  filter = req.body.filter;
+  const book = await BookModel.findById(filter);
+  
+};
+
+export default { findBy, show, update, destroy, submit, download };
