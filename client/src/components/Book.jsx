@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
+import axios from "axios";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import PageBookCounter from "../components/PageBookCounter";
@@ -12,39 +13,66 @@ import contoh_buku2 from "../assets/books/74._Isi_dan_Sampul_Kalah_oleh_Si_Cerdi
 // Setup react-pdf
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
 
-function Book() {
+function Book({ title, prev, next }) {
   // Get Window Size
   const { width } = useWindowDimensions();
 
   // Page Navigation Handling
-  const [numPages, setNumPages] = useState();
+  const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
-  function onDocumentLoadSuccess({ numPages }) {
-    setNumPages(numPages);
+  const [url, setUrl] = useState();
+
+  useEffect(() => {
+    async function fetchBook() {
+      try {
+        const response = await axios.post("http://localhost:5000/book/download", { title: title });
+
+        const bookObject = Object.values(response.data.bookFile);
+        const bookFile = new Uint8Array(bookObject);
+        const blob = new Blob([bookFile], { type: "application/pdf" });
+        const blobUrl = URL.createObjectURL(blob);
+        setUrl(blobUrl);
+        setIsLoading(false);
+      } catch (error) {
+        console.log("Error fetching book: ", error);
+      }
+    }
+    fetchBook();
+  }, [title]);
+
+  function onDocumentLoadSuccess(Props) {
+    if (numPages == 0) setNumPages(Props.numPages);
   }
 
   function nextPage() {
     if (pageNumber < numPages) {
       setPageNumber(pageNumber + 1);
+      next();
     }
   }
   function previousPage() {
     if (pageNumber > 1) {
       setPageNumber(pageNumber - 1);
+      prev();
     }
   }
 
   return (
     <div className="relative mb-60">
       {/* --BOOK FILE VIEWER-- */}
+      {/* Show message while loading */}
+      {isLoading && <div className="text-center">Loading...</div>}
       <div className="w-10/12 h-full mx-auto flex items-center justify-center ">
-        <Document
-          file={"https://firebasestorage.googleapis.com/v0/b/maca-deb33.appspot.com/o/books%2FFri%20May%2010%202024%2009%3A59%3A54%20GMT%2B0700%20(Western%20Indonesia%20Time)%20--%20buku-ilustrasi-anak_lumba-lumba.pdf?alt=media&token=58156b56-d883-4d49-aa23-3e2623807aae"}
-          onLoadSuccess={onDocumentLoadSuccess}
-          className="flex items-center justify-center rounded-2xl shadow-md">
-          <Page pageNumber={pageNumber} width={width * 0.8} className="rounded-2xl overflow-hidden" />
-        </Document>
+        {!isLoading && (
+          <Document
+            file={{ url }}
+            onLoadSuccess={onDocumentLoadSuccess}
+            className="flex items-center justify-center rounded-2xl shadow-md">
+            <Page pageNumber={pageNumber} width={width * 0.8} className="rounded-2xl overflow-hidden" />
+          </Document>
+        )}
       </div>
 
       {/* --PAGE COUNTER-- */}

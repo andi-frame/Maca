@@ -6,14 +6,18 @@ import bookRoutes from "./routes/bookRoutes.js";
 import pdfToAudioRoute from "./routes/pdfToAudioRoute.js";
 import askOpenaiRoute from "./routes/askOpenaiRoute.js";
 import loginRoute from "./routes/loginRoutes.js";
+import cors from "cors";
 
 const app = Express();
 const PORT = process.env.PORT;
 const MONGODB_URI = process.env.MONGODB_URI;
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI).then(() => {
+  console.log("Connected to MongoDB");
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use("/book", bookRoutes);
 app.use("/api", pdfToAudioRoute);

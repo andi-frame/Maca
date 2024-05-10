@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 function Card(Props) {
   const history = useNavigate();
   const location = Props.location;
+  const bookTitle = Props.title;
 
   function clickHandler() {
-    history(`/book/${Props.id}`, { state: { data: location.state.data } });
+    history(`/book/${bookTitle}`, { state: { data: location.state.data } });
   }
 
   return (

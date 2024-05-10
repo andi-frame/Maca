@@ -3,32 +3,29 @@ import Book from "../components/Book";
 import Mic from "../components/Mic";
 import AudioBook from "../components/AudioBook";
 import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function BookPage() {
-  const { id } = useParams();
+  const { booktitle } = useParams();
   const location = useLocation();
-  const [file, setFile] = useState();
 
-  useEffect(() => {
-    async function fetchBook() {
-      try {
-        const response = await axios.post("http://localhost:5000/book/", { filter: { _id: id } });
-        return response.data.response;
-      } catch (error) {
-        console.log("Error fetching book: ", error);
-      }
-    }
-  }, []);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function prevPage() {
+    setPageNumber((prev) => prev - 1);
+  }
+
+  function nextPage() {
+    setPageNumber((prev) => prev + 1);
+  }
 
   return (
     <div className="flex flex-col">
       <div className="w-full h-40 bg-gradient-to-b from-[#5EB07B]/85 to[#737373] -z-10 absolute"></div>
-      <HeaderBook title="Book Title" backHref="/" />
-      <Book />
-      <AudioBook />
+      <HeaderBook title={booktitle} backHref="/" location={location} />
+      <Book title={booktitle} prev={prevPage} next={nextPage} />
+      <AudioBook title={booktitle} pageNumber={pageNumber} />
     </div>
   );
 }

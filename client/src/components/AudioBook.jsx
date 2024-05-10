@@ -4,7 +4,7 @@ import "react-h5-audio-player/lib/styles.css";
 import AudioPlayerControls from "./AudioPlayerControls";
 import AudioPlayerDisplay from "./AudioPlayerDisplay";
 
-function AudioBook() {
+function AudioBook({ title, pageNumber }) {
   const [audioPlay, setAudioPlay] = useState(false);
   const audioPlayerElement = useRef(null);
 
@@ -31,7 +31,7 @@ function AudioBook() {
 
       {/* CONTENT */}
       <div className="w-10/12 flex flex-col justify-center items-center">
-        <AudioPlayerDisplay audioPlayerElement={audioPlayerElement} />
+        <AudioPlayerDisplay audioPlayerElement={audioPlayerElement} title={title} pageNumber={pageNumber} />
 
         {/* BUTTONS */}
         <div className="flex justify-center items-center mt-2 mb-3 gap-3">

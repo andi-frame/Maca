@@ -1,4 +1,4 @@
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getBytes } from "firebase/storage";
 import { storage } from "../firebase.js";
 import BookModel from "../models/BookModel.js";
 import upPdfTextToMongoDb from "../utils/upPdfTextToMongoDb.js";
@@ -125,10 +125,13 @@ const findBy = async (req, res) => {
 };
 
 // -- Dowload book by id
-const dowload = async (req, res) => {
-  filter = req.body.filter;
-  const book = await BookModel.findById(filter);
-  
+const download = async (req, res) => {
+  const filter = req.body;
+  const book = await BookModel.find(filter);
+  const bookRef = ref(storage, book[0].file);
+  const bookBuffer = await getBytes(bookRef);
+  const bookFile = new Uint8Array(bookBuffer);
+  res.json({ bookFile: bookFile });
 };
 
 export default { findBy, show, update, destroy, submit, download };
