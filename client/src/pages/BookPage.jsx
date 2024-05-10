@@ -1,6 +1,5 @@
 import HeaderBook from "../components/HeaderBook";
 import Book from "../components/Book";
-import Mic from "../components/Mic";
 import AudioBook from "../components/AudioBook";
 import { useParams } from "react-router-dom";
 import { useLocation, useNavigate } from "react-router-dom";

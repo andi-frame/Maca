@@ -7,8 +7,6 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
-import contoh_buku1 from "../assets/books/buku-ilustrasi-anak_lumba-lumba.pdf";
-import contoh_buku2 from "../assets/books/74._Isi_dan_Sampul_Kalah_oleh_Si_Cerdik.pdf";
 
 // Setup react-pdf
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();

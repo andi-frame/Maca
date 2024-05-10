@@ -1,6 +1,5 @@
 import Marquee from "react-fast-marquee";
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
-import audioExample from "../../../server/tempAudio.wav";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -50,6 +49,7 @@ function AudioPlayerDisplay({ audioPlayerElement, title, pageNumber }) {
       <AudioPlayer
         ref={audioPlayerElement}
         src={audioUrl}
+        autoPlay={false}
         showJumpControls={false}
         customVolumeControls={[]}
         customAdditionalControls={[]}

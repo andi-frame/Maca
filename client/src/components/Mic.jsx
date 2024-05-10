@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import "regenerator-runtime/runtime";
+import { IoSendSharp } from "react-icons/io5";
+import { IoSquareSharp } from "react-icons/io5";
+import { IoMdMic } from "react-icons/io";
+import { IoReturnDownBackOutline } from "react-icons/io5";
+
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const mic = new SpeechRecognition();
 
@@ -7,10 +12,10 @@ mic.continuous = true;
 mic.interimResults = true;
 mic.lang = "id";
 
-function Mic() {
+function Mic({ micBack, micSend, storeNote }) {
   const [isListening, setIsListening] = useState(false);
   const [note, setNote] = useState(null);
-  const [savedNotes, setSavedNotes] = useState([]);
+  // const [savedNotes, setSavedNotes] = useState("");
 
   useEffect(() => {
     handleListen();
@@ -47,28 +52,39 @@ function Mic() {
   };
 
   const handleSaveNote = () => {
-    setSavedNotes([...savedNotes, note]);
+    // setSavedNotes(note);
+    const question = note;
+    storeNote(question);
+
+    micSend();
     setNote("");
   };
 
   return (
     <>
-      <h1>Voice Notes</h1>
       <div className="">
-        <div className="flex flex-col justify-center items-center">
-          <h2>Current Note</h2>
-          {isListening ? <span>🎙️</span> : <span>🛑🎙️</span>}
-          <button onClick={handleSaveNote} disabled={!note}>
-            Save Note
+        <p className="text-[#8B8B8B] text-lg">{note}</p>
+        <div className="flex justify-center gap-3 items-center">
+          {/* BACK */}
+          <button onClick={micBack} className="rounded-full h-12 w-12 bg-[#3CB8A5] flex justify-center items-center">
+            <IoReturnDownBackOutline className="text-white mx-auto h-8 w-8" />
           </button>
-          <button onClick={() => setIsListening((prevState) => !prevState)}>Start/Stop</button>
-          <p>{note}</p>
-        </div>
-        <div className="">
-          <h2>Notes</h2>
-          {savedNotes.map((n) => (
-            <p key={n}>{n}</p>
-          ))}
+
+          {/* Start/Stop Mic */}
+          <button
+            onClick={() => setIsListening((prevState) => !prevState)}
+            className="rounded-full h-16 w-16 bg-[#3CB8A5] flex justify-center items-center">
+            {isListening && <IoSquareSharp className="text-white mx-auto h-10 w-10" />}
+            {!isListening && <IoMdMic className="text-white mx-auto h-10 w-10 " />}
+          </button>
+
+          {/* Save */}
+          <button
+            onClick={handleSaveNote}
+            // disabled={!note}
+            className="rounded-full h-12 w-12 bg-[#3CB8A5] flex justify-center items-center">
+            <IoSendSharp className="text-white mx-auto h-6 w-6 translate-x-0.5" onClick={micSend} />
+          </button>
         </div>
       </div>
     </>
