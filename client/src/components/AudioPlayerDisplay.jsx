@@ -7,15 +7,32 @@ import axios from "axios";
 // eslint-disable-next-line react/prop-types
 function AudioPlayerDisplay({ audioPlayerElement, title, pageNumber }) {
   const [marquee, setMarquee] = useState("");
+  const [audioUrl, setAudioUrl] = useState();
 
   useEffect(() => {
     async function fetchBookData() {
       try {
+        // Fetch book data
         const res = await axios.post("http://localhost:5000/book/", { filter: { title: title } });
         const book = res.data.response[0];
+
+        // Set marquee text
         const text = book.text[pageNumber - 1];
         setMarquee(text);
-        
+
+        // Fetch audio blobUrl
+        const resAudio = await axios.post("http://localhost:5000/utils/texttoaudio", { text: text });
+        const audioData = resAudio.data.audioData;
+
+        const audioObject = Object.values(audioData);
+        const audioFile = new Uint8Array(audioObject);
+        const audioBlob = new Blob([audioFile], { type: "application/pdf" });
+        const url = URL.createObjectURL(audioBlob);
+
+        console.log(url);
+        setAudioUrl(url);
+
+        // Error
       } catch (error) {
         console.log(error);
       }
@@ -32,7 +49,7 @@ function AudioPlayerDisplay({ audioPlayerElement, title, pageNumber }) {
       {/* AUDIO PLAYER */}
       <AudioPlayer
         ref={audioPlayerElement}
-        src={audioExample}
+        src={audioUrl}
         showJumpControls={false}
         customVolumeControls={[]}
         customAdditionalControls={[]}

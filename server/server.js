@@ -6,6 +6,7 @@ import bookRoutes from "./routes/bookRoutes.js";
 import pdfToAudioRoute from "./routes/pdfToAudioRoute.js";
 import askOpenaiRoute from "./routes/askOpenaiRoute.js";
 import loginRoute from "./routes/loginRoutes.js";
+import textToAudioRoute from "./routes/textToAudioRoute.js";
 import cors from "cors";
 
 const app = Express();
@@ -23,6 +24,7 @@ app.use("/book", bookRoutes);
 app.use("/api", pdfToAudioRoute);
 app.use("/api", askOpenaiRoute);
 app.use("", loginRoute);
+app.use("/utils", textToAudioRoute);
 
 app.listen(PORT, () => {
   console.log(`Running on port ${PORT}`);
